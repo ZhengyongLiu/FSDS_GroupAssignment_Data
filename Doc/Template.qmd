@@ -1,6 +1,6 @@
 ---
-bibliography: bio.bib
-csl: harvard-cite-them-right.csl
+# bibliography: bio.bib
+# csl: harvard-cite-them-right.csl
 title: Group Name's Group Project
 execute:
   echo: false
@@ -12,7 +12,7 @@ format:
       - css/web.scss
     code-copy: true
     code-link: true
-    #cover-image: cover.png
+    cover-image: cover.png
     toc: true
     toc-title: "On this page"
     toc-depth: 2
@@ -40,6 +40,8 @@ format:
     number-sections: false
     colorlinks: true
     highlight-style: github
+code_folding: hide
+eval: false
 ---
 
 ## Declaration of Authorship {.unnumbered .unlisted}
@@ -101,24 +103,14 @@ else:
 ```
 
 ## 1. Who collected the data?
-
-::: {.duedate}
-
-( 2 points; Answer due Week 7 )
-
-:::
-
-An inline citation: As discussed on @insideairbnb, there are many...
-
-A parenthetical citation: There are many ways to research Airbnb [see, for example, @insideairbnb]... 
+<p style="text-align: justify;">
+[Inside Airbnb](http://insideairbnb.com/about/)'s data was chiefly collected by Murray Cox, its founder, who leverages his skills in community activism, art, and data for social change. The project also benefits from contributions by John Morris, a key collaborator responsible for the website's design and major reports, and Taylor Higgins, who focuses on data organization and community building. Additional support comes from various past collaborators and an advisory board, each contributing unique expertise to the analysis and presentation of Airbnb's impact on communities.
+</p>
 
 ## 2. Why did they collect it?
-
-::: {.duedate}
-
-( 4 points; Answer due Week 7 )
-
-:::
+<p style="text-align: justify;">
+The data on London’s Airbnb locations, types, availability and rental prices is collected to inform data-driven public service and policy innovation. This approach aims to address complex urban planning and housing issues by analyzing housing market dynamics and population-related factors to improve policy decisions.
+</p>
 
 ```{python}
 print(f"Data frame is {df.shape[0]:,} x {df.shape[1]:,}")
@@ -130,34 +122,26 @@ ax.set_xlim([0,500]);
 ```
 
 ## 3. How was the data collected?  
-
-::: {.duedate}
-
-( 5 points; Answer due Week 8 )
-
-:::
+<p style="text-align: justify;">
+The data featured on the ‘Inside Airbnb’ website was primarily collected from the Airbnb Website itself, offering a comprehensive range of information such as property listings, availability calendars, customer reviews, and detailed metrics for listings in various regions and cities globally. Additionally, the project also involves collaboration with outside contributors who choose to participate. These collaborators, possibly from various professional backgrounds or with specific expertise, contribute to enhancing and expanding the data collection process. 
+</p>
 
 ## 4. How does the method of collection impact the completeness and/or accuracy of its representation of the process it seeks to study, and what wider issues does this raise?
-
-::: {.duedate}
-
-( 11 points; Answer due Week 9 )
-
-:::
+<p style="text-align: justify;">
+The collection of Airbnb data, excluding private listings, faces limitations like time lags and lacks insights into private communications or internal policies (Slee, n.d.). Changes in Airbnb's website structure can impact data accuracy, and privacy concerns arise regarding personal information. Policymakers using this data risk introducing biases, potentially leading to ineffective or unfair policies, and users must be aware of these constraints to avoid incorrect inferences (Slee, n.d.).
+</p>
 
 ## 5. What ethical considerations does the use of this data raise? 
+<p style="text-align: justify;">
+It's crucial to navigate a complex web of ethical and legal considerations, including privacy, data ownership, and user consent. Ethical data handling mandates not only transparency in collection, processing, and usage but also adherence to principles like data minimization, accuracy, non-discrimination, fairness, and accountability (Stoyanovich, Howe & Jagadish, 2020). Complying with legal regulations and preventing misuse are paramount, ensuring that any data collected is with consent, is the minimum necessary, and is used in a manner that avoids discriminatory practices and unauthorized purposes. While publicly accessible information may seem readily available, using it without consent can lead to ethical dilemmas and legal challenges in certain jurisdictions. Therefore, alongside maintaining openness about the data's origins and modifications, securing the data against unauthorized access is a critical responsibility, requiring robust storage and handling measures.
+</p>
 
-::: {.duedate}
-
-( 18 points; Answer due {{< var assess.group-date >}} )
-
-:::
 
 ## 6. With reference to the data (*i.e.* using numbers, figures, maps, and descriptive statistics), what does an analysis of Hosts and Listing types suggest about the nature of Airbnb lets in London? 
 
 ::: {.duedate}
 
-( 15 points; Answer due {{< var assess.group-date >}} )
+( 15 points; Answer due)
 
 :::
 
@@ -165,7 +149,7 @@ ax.set_xlim([0,500]);
 
 ::: {.duedate}
 
-( 45 points; Answer due {{< var assess.group-date >}} )
+( 45 points; Answer due)
 
 :::
 
@@ -176,4 +160,8 @@ Your QMD file should automatically download your BibTeX file. We will then re-ru
 Written in Markdown and generated from [Quarto](https://quarto.org/). Fonts used: [Spectral](https://fonts.google.com/specimen/Spectral) (mainfont), [Roboto](https://fonts.google.com/specimen/Roboto) (<span style="font-family:Sans-Serif;">sansfont</span>) and [JetBrains Mono](https://fonts.google.com/specimen/JetBrains%20Mono) (`monofont`). 
 
 ## References
+Inside Airbnb (2016) 'Inside Airbnb: Home', Available at: [Inside Airbnb](http://insideairbnb.com/) (Accessed: 04 December 2023).
 
+Slee, T. (2017). *Airbnb Data Collection: Methodology and Accuracy*. Retrieved from [http://tomslee.net/airbnb-data-collection](http://tomslee.net/airbnb-data-collection)
+
+Stoyanovich, J., Howe, B. & Jagadish, H.V., 2020. Responsible data management. *Proceedings of the VLDB Endowment*, 13(12).

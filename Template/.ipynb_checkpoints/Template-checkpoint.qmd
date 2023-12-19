@@ -1,0 +1,334 @@
+---
+# bibliography: bio.bib
+# csl: harvard-cite-them-right.csl
+title: Group Name's Group Project
+execute:
+  echo: false
+jupyter: python3
+format: 
+  html:
+    theme:
+      - minty
+      - css/web.scss
+    code-copy: true
+    code-link: true
+    cover-image: cover.png
+    toc: true
+    toc-title: "On this page"
+    toc-depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true    
+  pdf:
+    include-in-header:
+      text: |
+        \addtokomafont{disposition}{\rmfamily}
+    #documentclass: report
+    # If using Quarto in Docker, available fonts are: `fc-list : family | sort | uniq`
+    # If using Quarto on local machine then you can usually pick them from the list of installed fonts
+    mainfont: "Spectral" # https://fonts.google.com/specimen/Spectral
+    sansfont: "Roboto"   # https://fonts.google.com/specimen/Roboto
+    monofont: "JetBrainsMono-Regular" # https://fonts.google.com/specimen/JetBrains%20Mono
+    papersize: a4
+    geometry:
+      - top=25mm
+      - left=40mm
+      - right=30mm
+      - bottom=25mm
+      - heightrounded
+    toc: false
+    number-sections: false
+    colorlinks: true
+    highlight-style: github
+code_folding: hide
+eval: false
+---
+
+## Declaration of Authorship {.unnumbered .unlisted}
+
+We, [insert your group's names], confirm that the work presented in this assessment is our own. Where information has been derived from other sources, we confirm that this has been indicated in the work. Where a Large Language Model such as ChatGPT has been used we confirm that we have made its contribution to the final submission clear.
+
+Date:
+
+Student Numbers: 
+
+## Brief Group Reflection
+
+| What Went Well | What Was Challenging |
+| -------------- | -------------------- |
+| A              | B                    |
+| C              | D                    |
+
+## Priorities for Feedback
+
+Are there any areas on which you would appreciate more detailed feedback if we're able to offer it?
+
+```{=html}
+<style type="text/css">
+.duedate {
+  border: dotted 2px red; 
+  background-color: rgb(255, 235, 235);
+  height: 50px;
+  line-height: 50px;
+  margin-left: 40px;
+  margin-right: 40px
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: rgb(150,100,100);
+  text-align: center;
+}
+</style>
+```
+
+{{< pagebreak >}}
+
+# Response to Questions
+
+```{python}
+import os
+import pandas as pd
+```
+
+```{python}
+host = 'https://orca.casa.ucl.ac.uk'
+path = '~jreades/data'
+file = '2022-09-10-listings.csv.gz'
+url  = f'{host}/{path}/{file}'
+
+if os.path.exists(file):
+  df = pd.read_csv(file, compression='gzip', low_memory=False)
+else: 
+  df = pd.read_csv(url, compression='gzip', low_memory=False)
+  df.to_csv(file)
+```
+
+## 1. Who collected the data?
+<p style="text-align: justify;">
+[Inside Airbnb](http://insideairbnb.com/about/)'s data was chiefly collected by Murray Cox, its founder, who leverages his skills in community activism, art, and data for social change. The project also benefits from contributions by John Morris, a key collaborator responsible for the website's design and major reports, and Taylor Higgins, who focuses on data organization and community building. Additional support comes from various past collaborators and an advisory board, each contributing unique expertise to the analysis and presentation of Airbnb's impact on communities.
+</p>
+
+## 2. Why did they collect it?
+<p style="text-align: justify;">
+The data on London’s Airbnb locations, types, availability and rental prices is collected to inform data-driven public service and policy innovation. This approach aims to address complex urban planning and housing issues by analyzing housing market dynamics and population-related factors to improve policy decisions.
+</p>
+
+```{python}
+print(f"Data frame is {df.shape[0]:,} x {df.shape[1]:,}")
+```
+
+```{python}
+ax = df.host_listings_count.plot.hist(bins=50);
+ax.set_xlim([0,500]);
+```
+
+## 3. How was the data collected?  
+<p style="text-align: justify;">
+The data featured on the ‘Inside Airbnb’ website was primarily collected from the Airbnb Website itself, offering a comprehensive range of information such as property listings, availability calendars, customer reviews, and detailed metrics for listings in various regions and cities globally. Additionally, the project also involves collaboration with outside contributors who choose to participate. These collaborators, possibly from various professional backgrounds or with specific expertise, contribute to enhancing and expanding the data collection process. 
+</p>
+
+## 4. How does the method of collection impact the completeness and/or accuracy of its representation of the process it seeks to study, and what wider issues does this raise?
+<p style="text-align: justify;">
+The collection of Airbnb data, excluding private listings, faces limitations like time lags and lacks insights into private communications or internal policies (Slee, n.d.). Changes in Airbnb's website structure can impact data accuracy, and privacy concerns arise regarding personal information. Policymakers using this data risk introducing biases, potentially leading to ineffective or unfair policies, and users must be aware of these constraints to avoid incorrect inferences (Slee, n.d.).
+</p>
+
+## 5. What ethical considerations does the use of this data raise? 
+<p style="text-align: justify;">
+It's crucial to navigate a complex web of ethical and legal considerations, including privacy, data ownership, and user consent. Ethical data handling mandates not only transparency in collection, processing, and usage but also adherence to principles like data minimization, accuracy, non-discrimination, fairness, and accountability (Stoyanovich, Howe & Jagadish, 2020). Complying with legal regulations and preventing misuse are paramount, ensuring that any data collected is with consent, is the minimum necessary, and is used in a manner that avoids discriminatory practices and unauthorized purposes. While publicly accessible information may seem readily available, using it without consent can lead to ethical dilemmas and legal challenges in certain jurisdictions. Therefore, alongside maintaining openness about the data's origins and modifications, securing the data against unauthorized access is a critical responsibility, requiring robust storage and handling measures.
+</p>
+
+## 6. With reference to the data (*i.e.* using numbers, figures, maps, and descriptive statistics), what does an analysis of Hosts and Listing types suggest about the nature of Airbnb lets in London? 
+
+### Preparation
+Loading Package
+
+```{python}
+from urllib.parse import urlparse
+from shapely.geometry import Point
+from geopandas.tools import sjoin
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import os
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from requests import get
+import contextily as ctx
+import requests
+import folium
+from folium.plugins import MarkerCluster
+import seaborn as sns
+```
+
+```{python}
+os.getcwd()
+```
+
+```{python}
+# Read shapefile online
+def cache_data(source_url, dest_dir):
+    # 确保目标目录存在
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+
+    # 解析文件名
+    filename = source_url.split('/')[-1].split('?')[0]  # 假设URL以文件名结尾
+    file_path = os.path.join(dest_dir, filename)
+
+    # 如果文件不存在，则下载
+    if not os.path.isfile(file_path):
+        response = requests.get(source_url)
+        if response.status_code == 200:
+            with open(file_path, 'wb') as file:
+                file.write(response.content)
+        else:
+            raise Exception(f"Failed to download {source_url}")
+
+    return file_path
+```
+
+### 6.1 Geographic Distribution Map 
+```{python}
+# Read Relative Document
+# 读取london_Boroughshapefile
+London_borough = gpd.read_file(
+    cache_data('https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Borough_Excluding_MHW.zip?raw=true', 
+               os.path.join('data','geo')), driver='ESRI Shapefile')
+
+# 读取csv
+url ='https://raw.githubusercontent.com/OnTheMon/FSDS-project/main/Data/cleaned_data_2023.csv'
+df = pd.read_csv(url)
+print(len(df))
+```
+
+![Geographic Distribution Map](Geographic_Distribution_Map.png)
+
+
+<p style="text-align: justify;">
+通过四种类型房源的分布对比可得，Entire home apt和private room分布范围广且在伦敦市中心（特别是商业和旅游区）非常密集；Hotel room集中在市中心的旅游和商务区域、shared room的分布较为分散，这两种房源的密度显著低于前两种。说明私密性、完整性好的住房更符合市场需求。
+</p>
+
+```{python}
+# 假设df是您的原始DataFrame，London_borough是伦敦各区的地理数据
+df = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.longitude, df.latitude), crs='EPSG:4326').to_crs(London_borough.crs)
+
+# 确定子图的行数和列数
+n_room_types = len(df['room_type'].unique())
+n_cols = 2  # 例如，选择2列
+n_rows = n_room_types // n_cols + (n_room_types % n_cols > 0)
+
+# 创建一个足够大的图形对象
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(8 * n_cols, 6 * n_rows))
+
+# 遍历每种房间类型，为每种类型创建一个子图
+for k, room_type in enumerate(df['room_type'].unique()):
+    idf = df[df['room_type'] == room_type]
+    room_type_clean = room_type.replace('/', ' ')
+
+    # 确定当前子图的位置
+    ax = axs[k // n_cols, k % n_cols]
+
+    # 在当前子图上绘制数据
+    London_borough.plot(ax=ax, alpha=1, edgecolor='#656565', facecolor='#E1E1E1', linewidth=1.5)
+    London_borough.plot(ax=ax, alpha=1, edgecolor='#656565', facecolor='none', linewidth=1.5, zorder=10)
+    ax.scatter(idf.geometry.x, idf.geometry.y, c='#346BAB', s=50, alpha=.1)
+
+    # 设置子图样式
+    for spine in ax.spines.values():
+        spine.set_color('white')
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xlabel(room_type_clean)
+
+
+plt.tight_layout()
+plt.savefig(r'Geographic_Distribution_Map.png', dpi=600)
+plt.show()
+```
+
+
+### 6.2 Host type and number of listings
+
+<p style="text-align: justify;">
+通过单一房东拥有房源数量的频数直方图可知，大量的房东只拥有少数房源，可能表明这部分房东是兼职或偶尔出租自己的空置房产；另一方面，也有少数房东控制了大量房源。这些可能是专业的短期租赁公司或投资者。通过比较Airbnb在伦敦各区域房源的均价可得，高需求区域（如伦敦市中心），Airbnb的价格普遍较高，而在边远或非商业旅游热点区域，价格可能更为合理。
+</p>
+
+![Host type and number of listings](Host_type_and_number_of_listings.png)
+
+```{python}
+
+# 创建一个图形对象和两个子图
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 12))
+
+# 第一个子图：主机名称频率直方图
+host_name_counts = df['host_name'].value_counts()
+color = 'blue'
+ax1.hist(host_name_counts, bins=range(32, host_name_counts.max() + 2), edgecolor='red', histtype="bar", alpha=0.7, color=color)
+ax1.set_title('Host Frequency Histogram')
+ax1.set_ylabel('Frequency')  
+ax1.set_xlabel('Number of Hosts')  
+ax1.grid(axis='y', linestyle='--', alpha=0.7)
+
+# 第二个子图：伦敦各区平均房价
+# 连接数据计算均值
+joined = sjoin(df, London_borough, how='inner', predicate='within')
+
+#清理数据（删除美元符号并转化为浮点数）
+joined['price'] = joined['price'].replace('[\$,]', '', regex=True).astype(float)
+
+#计算均值
+meandf= joined.groupby('NAME')['price'].mean().reset_index()
+gdf = London_borough.merge(meandf, on='NAME')
+cmap = 'Blues'
+norm = mcolors.Normalize(vmin=gdf['price'].min(), vmax=gdf['price'].max())
+
+# 绘制GeoDataFrame
+divider = make_axes_locatable(ax2)
+cax = divider.append_axes("right", size="5%", pad=0.1)
+gdf.plot(column='price', ax=ax2, cmap=cmap, legend=True, cax=cax, alpha=0.8, edgecolor='k')
+
+# 添加颜色条
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+sm.set_array([])
+cbar = fig.colorbar(sm, ax=ax2, cax=cax)
+ax2.set_title('Average House Price of London Boroughs')
+ax2.axis('off')
+
+# 调整布局
+plt.tight_layout()
+
+# 保存图像
+plt.savefig(r'Host_type_and_number_of_listings.png', dpi=600)
+
+# 显示图像
+plt.show()
+
+```
+
+
+### Summary
+<p style="text-align: justify;">
+In summary, the distribution of listings: Entire home apt (completeness) and private room (privacy) show a trend of concentration in the city centre and hotspots, covering a wide range of areas, and adapting to the market demand; the average price of the area: at the same time, the high price of areas in London (especially in the city centre) with a dense number of Airbnb listings in the convenience of tenants' diversified needs at the same time as rewarding the landlord with a high income; the type of landlord: a large number of landlords only have a handful of listings, suggesting that Airbnb offers a relatively easy market for individual hosts to enter. A small number of landlords (specialised short-term rental companies or investors) control a large number of listings and occupy a large share of the market, making them susceptible to influencing the long-term rental market.
+</p>
+
+
+## 7. Drawing on your previous answers, and supporting your response with evidence (e.g. figures, maps, and statistical analysis/models), how *could* this data set be used to inform the regulation of Short-Term Lets (STL) in London? 
+
+::: {.duedate}
+
+( 45 points; Answer due)
+
+:::
+
+## Sustainable Authorship Tools
+
+Your QMD file should automatically download your BibTeX file. We will then re-run the QMD file to generate the output successfully.
+
+Written in Markdown and generated from [Quarto](https://quarto.org/). Fonts used: [Spectral](https://fonts.google.com/specimen/Spectral) (mainfont), [Roboto](https://fonts.google.com/specimen/Roboto) (<span style="font-family:Sans-Serif;">sansfont</span>) and [JetBrains Mono](https://fonts.google.com/specimen/JetBrains%20Mono) (`monofont`). 
+
+## References
+Inside Airbnb (2016) 'Inside Airbnb: Home', Available at: [Inside Airbnb](http://insideairbnb.com/) (Accessed: 04 December 2023).
+
+Slee, T. (2017). *Airbnb Data Collection: Methodology and Accuracy*. Retrieved from [http://tomslee.net/airbnb-data-collection](http://tomslee.net/airbnb-data-collection)
+
+Stoyanovich, J., Howe, B. & Jagadish, H.V., 2020. Responsible data management. *Proceedings of the VLDB Endowment*, 13(12).

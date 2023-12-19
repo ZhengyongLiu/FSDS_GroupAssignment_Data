@@ -1,34 +1,25 @@
 ---
-# bibliography: bio.bib
-# csl: harvard-cite-them-right.csl
 title: Group Name's Group Project
 execute:
   echo: false
-jupyter: python3
-format: 
+  freeze: true
+format:
   html:
-    theme:
-      - minty
-      - css/web.scss
     code-copy: true
     code-link: true
-    cover-image: cover.png
     toc: true
-    toc-title: "On this page"
+    toc-title: On this page
     toc-depth: 2
     toc_float:
       collapsed: false
-      smooth_scroll: true    
+      smooth_scroll: true
   pdf:
     include-in-header:
       text: |
         \addtokomafont{disposition}{\rmfamily}
-    #documentclass: report
-    # If using Quarto in Docker, available fonts are: `fc-list : family | sort | uniq`
-    # If using Quarto on local machine then you can usually pick them from the list of installed fonts
-    mainfont: "Spectral" # https://fonts.google.com/specimen/Spectral
-    sansfont: "Roboto"   # https://fonts.google.com/specimen/Roboto
-    monofont: "JetBrainsMono-Regular" # https://fonts.google.com/specimen/JetBrains%20Mono
+    mainfont: Spectral
+    sansfont: Roboto
+    monofont: JetBrainsMono-Regular
     papersize: a4
     geometry:
       - top=25mm
@@ -40,11 +31,18 @@ format:
     number-sections: false
     colorlinks: true
     highlight-style: github
-code_folding: hide
-eval: false
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .qmd
+      format_name: quarto
+      format_version: '1.0'
+      jupytext_version: 1.15.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
 ---
-
-## Declaration of Authorship {.unnumbered .unlisted}
 
 We, [insert your group's names], confirm that the work presented in this assessment is our own. Where information has been derived from other sources, we confirm that this has been indicated in the work. Where a Large Language Model such as ChatGPT has been used we confirm that we have made its contribution to the final submission clear.
 
@@ -52,115 +50,770 @@ Date:
 
 Student Numbers: 
 
-## Brief Group Reflection
 
 | What Went Well | What Was Challenging |
 | -------------- | -------------------- |
 | A              | B                    |
 | C              | D                    |
 
-## Priorities for Feedback
 
-Are there any areas on which you would appreciate more detailed feedback if we're able to offer it?
 
-```{=html}
-<style type="text/css">
-.duedate {
-  border: dotted 2px red; 
-  background-color: rgb(255, 235, 235);
-  height: 50px;
-  line-height: 50px;
-  margin-left: 40px;
-  margin-right: 40px
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: rgb(150,100,100);
-  text-align: center;
-}
-</style>
-```
-
-{{< pagebreak >}}
-
-# Response to Questions
-
-```{python}
-import os
-import pandas as pd
-```
-
-```{python}
-host = 'https://orca.casa.ucl.ac.uk'
-path = '~jreades/data'
-file = '2022-09-10-listings.csv.gz'
-url  = f'{host}/{path}/{file}'
-
-if os.path.exists(file):
-  df = pd.read_csv(file, compression='gzip', low_memory=False)
-else: 
-  df = pd.read_csv(url, compression='gzip', low_memory=False)
-  df.to_csv(file)
-```
-
-## 1. Who collected the data?
+# 1. Who collected the data?
 <p style="text-align: justify;">
 [Inside Airbnb](http://insideairbnb.com/about/)'s data was chiefly collected by Murray Cox, its founder, who leverages his skills in community activism, art, and data for social change. The project also benefits from contributions by John Morris, a key collaborator responsible for the website's design and major reports, and Taylor Higgins, who focuses on data organization and community building. Additional support comes from various past collaborators and an advisory board, each contributing unique expertise to the analysis and presentation of Airbnb's impact on communities.
 </p>
 
-## 2. Why did they collect it?
+# 2. Why did they collect it?
 <p style="text-align: justify;">
 The data on London’s Airbnb locations, types, availability and rental prices is collected to inform data-driven public service and policy innovation. This approach aims to address complex urban planning and housing issues by analyzing housing market dynamics and population-related factors to improve policy decisions.
 </p>
 
-```{python}
-print(f"Data frame is {df.shape[0]:,} x {df.shape[1]:,}")
-```
-
-```{python}
-ax = df.host_listings_count.plot.hist(bins=50);
-ax.set_xlim([0,500]);
-```
-
-## 3. How was the data collected?  
+# 3. How was the data collected?  
 <p style="text-align: justify;">
 The data featured on the ‘Inside Airbnb’ website was primarily collected from the Airbnb Website itself, offering a comprehensive range of information such as property listings, availability calendars, customer reviews, and detailed metrics for listings in various regions and cities globally. Additionally, the project also involves collaboration with outside contributors who choose to participate. These collaborators, possibly from various professional backgrounds or with specific expertise, contribute to enhancing and expanding the data collection process. 
 </p>
 
-## 4. How does the method of collection impact the completeness and/or accuracy of its representation of the process it seeks to study, and what wider issues does this raise?
+# 4. How does the method of collection impact the completeness and/or accuracy of its representation of the process it seeks to study, and what wider issues does this raise?
 <p style="text-align: justify;">
 The collection of Airbnb data, excluding private listings, faces limitations like time lags and lacks insights into private communications or internal policies (Slee, n.d.). Changes in Airbnb's website structure can impact data accuracy, and privacy concerns arise regarding personal information. Policymakers using this data risk introducing biases, potentially leading to ineffective or unfair policies, and users must be aware of these constraints to avoid incorrect inferences (Slee, n.d.).
 </p>
 
-## 5. What ethical considerations does the use of this data raise? 
+# 5. What ethical considerations does the use of this data raise? 
 <p style="text-align: justify;">
 It's crucial to navigate a complex web of ethical and legal considerations, including privacy, data ownership, and user consent. Ethical data handling mandates not only transparency in collection, processing, and usage but also adherence to principles like data minimization, accuracy, non-discrimination, fairness, and accountability (Stoyanovich, Howe & Jagadish, 2020). Complying with legal regulations and preventing misuse are paramount, ensuring that any data collected is with consent, is the minimum necessary, and is used in a manner that avoids discriminatory practices and unauthorized purposes. While publicly accessible information may seem readily available, using it without consent can lead to ethical dilemmas and legal challenges in certain jurisdictions. Therefore, alongside maintaining openness about the data's origins and modifications, securing the data against unauthorized access is a critical responsibility, requiring robust storage and handling measures.
 </p>
 
-## 6. With reference to the data (*i.e.* using numbers, figures, maps, and descriptive statistics), what does an analysis of Hosts and Listing types suggest about the nature of Airbnb lets in London? 
+# 6. With reference to the data (*i.e.* using numbers, figures, maps, and descriptive statistics), what does an analysis of Hosts and Listing types suggest about the nature of Airbnb lets in London? 
 
-::: {.duedate}
+```{python}
+import os
+from urllib.parse import urlparse
+import contextily as ctx
+import folium
+import geopandas as gpd
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import requests
+import seaborn as sns
+from folium.plugins import MarkerCluster
+from geopandas.tools import sjoin
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from requests import get
+from shapely.geometry import Point
+```
 
-( 15 points; Answer due)
+```{python}
+def cache_data(source_url, dest_dir):
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
 
-:::
+    filename = source_url.split("/")[-1].split("?")[0] 
+    file_path = os.path.join(dest_dir, filename)
 
-## 7. Drawing on your previous answers, and supporting your response with evidence (e.g. figures, maps, and statistical analysis/models), how *could* this data set be used to inform the regulation of Short-Term Lets (STL) in London? 
+    if not os.path.isfile(file_path):
+        response = requests.get(source_url)
+        if response.status_code == 200:
+            with open(file_path, "wb") as file:
+                file.write(response.content)
+        else:
+            raise Exception(f"Failed to download {source_url}")
 
-::: {.duedate}
+    return file_path
+```
 
-( 45 points; Answer due)
+## 6.1 Geographic Distribution Map 
 
-:::
+```{python}
+# london_Boroughshapefile
+London_borough = gpd.read_file(
+    cache_data(
+        "https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Borough_Excluding_MHW.zip?raw=true",
+        os.path.join("data", "geo"),
+    ),
+    driver="ESRI Shapefile",
+)
+# CSV
+url = "https://raw.githubusercontent.com/OnTheMon/FSDS-project/main/Data/cleaned_data_2023.csv"
+df = pd.read_csv(url)
+```
 
-## Sustainable Authorship Tools
+![Geographic Distribution Map](Geographic_Distribution_Map.png)
 
-Your QMD file should automatically download your BibTeX file. We will then re-run the QMD file to generate the output successfully.
 
-Written in Markdown and generated from [Quarto](https://quarto.org/). Fonts used: [Spectral](https://fonts.google.com/specimen/Spectral) (mainfont), [Roboto](https://fonts.google.com/specimen/Roboto) (<span style="font-family:Sans-Serif;">sansfont</span>) and [JetBrains Mono](https://fonts.google.com/specimen/JetBrains%20Mono) (`monofont`). 
+<p style="text-align: justify;">
+Comparison of the distribution of the four types of housing can be seen, Entire home apt and private room distribution range and in the centre of London (especially business and tourist areas) is very dense; Hotel room is concentrated in the centre of the tourist and business areas, the distribution of shared room is more dispersed, and the density of these two types of housing is significantly lower than the first two types of housing. This suggests that housing with good privacy and integrity is more in line with market demand (Boyle, 2022).
+</p>
 
-## References
+```{python}
+# Converting coordinates to geographic data and selecting the appropriate coordinate system
+df = gpd.GeoDataFrame(
+    df, geometry=gpd.points_from_xy(df.longitude, df.latitude), crs="EPSG:4326"
+).to_crs(London_borough.crs)
+
+# Determine the number of rows and columns of the subgraph
+n_room_types = len(df["room_type"].unique())
+n_cols = 2  
+n_rows = n_room_types // n_cols + (n_room_types % n_cols > 0)
+
+# Create a large enough graphical object
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(8 * n_cols, 6 * n_rows))
+
+# Iterate over each room type and create a subgraph for each type
+for k, room_type in enumerate(df["room_type"].unique()):
+    idf = df[df["room_type"] == room_type]
+    room_type_clean = room_type.replace("/", " ")
+
+    # Determine the location of the current subgraph
+    ax = axs[k // n_cols, k % n_cols]
+
+    # Plotting data on the current subplot
+    London_borough.plot(
+        ax=ax, alpha=1, edgecolor="#656565", facecolor="#E1E1E1", linewidth=1
+    )
+    London_borough.plot(
+        ax=ax, alpha=1, edgecolor="#656565", facecolor="none", linewidth=1, zorder=10
+    )
+    ax.scatter(idf.geometry.x, idf.geometry.y, c="#346BAB", s=1, alpha=1)
+
+    # Setting subgraph styles
+    for spine in ax.spines.values():
+        spine.set_color("white")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xlabel(room_type_clean)
+
+plt.tight_layout()
+plt.show()
+```
+
+## 6.2 Host type and number of listings
+
+<p style="text-align: justify;">
+The frequency histogram of the number of properties owned by a single landlord shows that a large number of landlords own only a small number of properties, which may indicate that this group of landlords are renting out their vacant properties on a part-time basis or occasionally; on the other hand, there are a small number of landlords who control a large number of properties. These may be specialist short-term letting companies or investors. A comparison of the average price of Airbnb listings in various areas of London shows that Airbnb prices are generally higher in high-demand areas (e.g. central London), while prices may be more reasonable in remote or non-commercial tourist hotspots.
+</p>
+
+![Host type and number of listings](Host_type_and_number_of_listings.png)
+
+```{python}
+# Host Name Frequency Histogram
+host_name_counts = df['host_name'].value_counts()
+
+# Process host_name_counts into the given grouping
+bins = [0, 2, 4, 6, 8, 10, float('inf')]
+labels = ['1-2', '3-4', '5-6', '7-8', '9-10', '>10']
+grouped_counts = pd.cut(host_name_counts, bins=bins, labels=labels, right=False)
+
+# Calculate the frequency of each grouping
+grouped_counts = grouped_counts.value_counts().sort_index()
+
+# Create an image and two subimages
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))  # 调整figsize根据需要
+
+# First sub-chart: bar chart
+colors = ['#835AF1', '#8178F0', '#8097EF', '#8AB6E9', '#A1D7DE', '#B8F7D4']  # 设置颜色
+grouped_counts.plot(kind='bar', color=colors, ax=ax1)
+
+# Setting up chart titles and labels
+ax1.set_title('Host Frequency Histogram')
+ax1.set_ylabel('Frequency')
+ax1.set_xlabel('Number of properties per landlord')
+
+# Second sub-map: geographic data map
+cmap = 'Blues'
+norm = mcolors.Normalize(vmin=gdf['price'].min(), vmax=gdf['price'].max())
+
+# Drawing GeoDataFrame
+divider = make_axes_locatable(ax2)
+cax = divider.append_axes("right", size="5%", pad=0.1)
+gdf.plot(column='price', ax=ax2, cmap=cmap, legend=True, cax=cax, alpha=0.8, edgecolor='k')
+
+# Add colour bands
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+sm.set_array([])
+cbar = fig.colorbar(sm, ax=ax2, cax=cax)
+ax2.set_title('Average House Price of London Boroughs')
+ax2.axis('off')
+plt.tight_layout()
+plt.show()
+```
+
+## Summary
+<p style="text-align: justify;">
+In summary, the distribution of listings: Entire home apt (completeness) and private room (privacy) show a trend of concentration in the city centre and hotspots, covering a wide range of areas, and adapting to the market demand; the average price of the area: at the same time, the high price of areas in London (especially in the city centre) with a dense number of Airbnb listings in the convenience of tenants' diversified needs at the same time as rewarding the landlord with a high income; the type of landlord: a large number of landlords only have a handful of listings, suggesting that Airbnb offers a relatively easy market for individual hosts to enter. A small number of landlords (specialised short-term rental companies or investors) control a large number of listings and occupy a large share of the market, making them susceptible to influencing the long-term rental market.
+</p>
+
+
+# 7. Drawing on your previous answers, and supporting your response with evidence (e.g. figures, maps, and statistical analysis/models), how *could* this data set be used to inform the regulation of Short-Term Lets (STL) in London?
+自airbnb 推出以来，共享经济的概念已经深刻影响了人们旅游的方式，其相比传统酒店而言具有的价格优势、灵活属性受到了广泛的欢迎。然而，与airbnb 住宿运营热潮相伴而来的问题，也引起了公众对其发展的广泛担忧。
+
+我们的研究主要专注于不同类型的airbnb房屋类型对于伦敦市场的影响，重点在于entire room和private room
+
+## 7.1 整租房对于市场的影响
+进行具体的分析前首先对研究目标的大致分布状况进行了解，这里选用了核密度分析的方法，比较点的临近范围的分布密度，以得出Airbnb在空间上的分布特征和时间上的变化特点。
+
+![Entire Room Distribution](Entire_Room_Distribution.png)
+
+```{python}
+from io import BytesIO
+from zipfile import ZipFile
+from scipy.stats import gaussian_kde
+from matplotlib.colors import LinearSegmentedColormap
+
+# 数据URLs
+data_urls = {
+    '2016': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2016.csv',
+    '2019': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2019.csv'
+}
+
+# 读取伦敦矢量图
+shapefile_url = 'https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Ward.zip?raw=true'
+r = requests.get(shapefile_url)
+z = ZipFile(BytesIO(r.content))
+z.extractall('/tmp/geo')  # 使用临时目录
+london_vector_map = gpd.read_file('/tmp/geo', driver='ESRI Shapefile')
+london_vector_map = london_vector_map.to_crs(epsg=4326)
+
+# 创建画布
+fig, axes = plt.subplots(1, 2, figsize=(16, 12))
+
+# 遍历年份
+for i, year in enumerate(data_urls.keys()):
+    # 读取数据
+    df = pd.read_csv(data_urls[year])
+    geometry = gpd.points_from_xy(df.longitude, df.latitude)
+    geo_df = gpd.GeoDataFrame(df, geometry=geometry, crs='EPSG:4326')
+
+    # 计算核密度估计
+    xy = np.vstack([df['longitude'], df['latitude']])
+    kde = gaussian_kde(xy, bw_method='silverman')
+    kde_values = kde(xy)
+
+    # 创建颜色映射
+    colors = [(0, 'green'), (0.5, 'yellow'), (1, 'red')]
+    cmap = LinearSegmentedColormap.from_list('custom_cmap', colors)
+
+    # 将密度值归一化并映射到颜色
+    norm_kde_values = kde_values / max(kde_values)
+    colors = cmap(norm_kde_values)
+
+    # 绘制地图
+    ax = axes[i]
+    london_vector_map.plot(ax=ax, color='lightgrey', edgecolor='black', linewidth=0.1)
+    geo_df.plot(ax=ax, marker='o', color=colors, markersize=0.25)
+
+    # 添加年份标签
+    ax.text(0.5, -0.1, f"Year {year}", size=12, ha='center', transform=ax.transAxes)
+
+    # 调整坐标轴可见性
+    ax.set_axis_off()
+
+plt.tight_layout()
+plt.savefig('Entire_Room_Distribution.png', dpi=300)
+plt.show()
+
+```
+
+```{python}
+import pandas as pd
+import geopandas as gpd
+import requests
+from shapely.geometry import Point
+from zipfile import ZipFile
+from io import BytesIO
+
+# 下载和解压伦敦行政区划的形状文件
+shapefile_url = 'https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Borough_Excluding_MHW.zip?raw=true'
+response = requests.get(shapefile_url)
+zip_file = ZipFile(BytesIO(response.content))
+zip_file.extractall('/tmp/geo')  # 解压到临时目录
+london_vector_map2 = gpd.read_file('/tmp/geo', driver='ESRI Shapefile')
+london_vector_map2 = london_vector_map2.to_crs(epsg=4326)  # 正确的变量名和CRS
+
+# 处理指定年份的数据
+years = [2016, 2019]
+
+for year in years:
+    # 读取当前年份的数据
+    df = pd.read_csv(data_urls[str(year)])
+
+    # 过滤出 'Entire home/apt' 类型的数据
+    df = df[df['room_type'] == 'Entire home/apt']
+
+    # 处理价格字段，去除货币符号和逗号，并将其转换为浮点数
+    df['price'] = df['price'].replace('[\$,]', '', regex=True).astype(float)
+
+    # 使用经纬度列创建一个 GeoDataFrame
+    geometry = [Point(xy) for xy in zip(df['longitude'], df['latitude'])]
+    geo_df = gpd.GeoDataFrame(df, geometry=geometry, crs='EPSG:4326')
+
+    # 进行空间连接以与伦敦行政区划关联
+    joined = gpd.sjoin(geo_df, london_vector_map2, how="inner", predicate="within")  # 使用 predicate
+
+    # 按行政区划统计数据
+    group_data = joined.groupby('GSS_CODE').agg({'price': ['count', 'mean']})
+    group_data.columns = ['COUNT', 'price_ave']
+
+    # 计算年度Airbnb收入
+    group_data['airbnb_annual_income'] = group_data['price_ave'] * group_data['COUNT'] * 50
+
+    # 获取行政区划名称
+    borough_names = london_vector_map2.set_index('GSS_CODE')['NAME'].to_dict()
+
+    # 合并行政区划数据
+    borough_data = pd.DataFrame({
+        'GSS_CODE': group_data.index,
+        'NAME': [borough_names[code] for code in group_data.index],
+        'COUNT': group_data['COUNT'],
+        'price_ave': group_data['price_ave'],
+        'airbnb_annual_income': group_data['airbnb_annual_income']
+    })
+
+    # 保存为 CSV 文件
+    borough_data.to_csv(f'borough_data_{year}.csv', index=False)
+
+```
+
+```{python}
+# 读取 Persons_per_dwelling.csv 文件
+persons_per_dwelling_df_url = "https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/Persons_per_dwelling.csv"
+persons_per_dwelling_df = pd.read_csv(persons_per_dwelling_df_url)
+
+years = [2016, 2019]
+merged_data = {}  # 存储每年合并后的数据
+
+for year in years:
+    # 读取每年的 borough_data 文件，这里需要更正文件路径
+    borough_data_df = pd.read_csv(f'borough_data_{year}.csv')
+    filtered_persons_per_dwelling = persons_per_dwelling_df[persons_per_dwelling_df['Year'] == year]
+
+    # 合并数据，基于 GSS_CODE 和 Code
+    merged_df = borough_data_df.merge(filtered_persons_per_dwelling, left_on='GSS_CODE', right_on='Code')
+
+    # 存储合并后的数据
+    merged_data[year] = merged_df
+    # 保存合并后的数据到不同的文件名，以避免覆盖原始数据
+    merged_df.to_csv(f'merged_borough_data_{year}.csv', index=False)
+```
+
+```{python}
+import pandas as pd
+
+# 定义voa_rent数据的路径
+file_paths = {
+    'voa_rent_2016': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/voa-rent-2016.csv', 
+    'voa_rent_2019': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/voa-rent-2019.csv',
+}
+
+# 读取voa_rent数据
+data = {}
+for key, path in file_paths.items():
+    data[key] = pd.read_csv(path)
+
+# 处理2016年和2019年的数据
+for year in ['2016', '2019']:
+    # 读取borough_data数据
+    borough_data_path = f'borough_data_{year}.csv'  # 假设文件已经按照前面的脚本保存
+    borough_data = pd.read_csv(borough_data_path)
+
+    # 计算 rent_income_sum 列
+    data[f'voa_rent_{year}']['rent_income_sum'] = data[f'voa_rent_{year}']['Count of rents'] * data[f'voa_rent_{year}']['Average'] * 12
+
+    # 合并borough_data和voa_rent数据
+    combined_data = pd.merge(
+        borough_data, 
+        data[f'voa_rent_{year}'][['Code', 'rent_income_sum']], 
+        left_on='GSS_CODE', 
+        right_on='Code', 
+        how='inner',
+        suffixes=('_borough', '_voa')
+    )
+
+    # 删除冗余的列（如果需要）
+    combined_data.drop(columns=['Code'], inplace=True)
+
+    # 保存为CSV文件
+    output_filename = f'combined_data_{year}.csv'
+    combined_data.to_csv(output_filename, index=False)
+ 
+```
+
+
+
+    'borough_data_2016': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2016.csv',
+    'borough_data_2019': 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2019.csv',
+
+## Exploring the spatial clustering and distributional characteristics of ghost houses
+
+<p style="text-align: justify;">
+Some users are bypassing the 90-day rule by listing different properties with the same photos on Airbnb. These "ghost hotels" are driving up rental prices and driving away short-term travellers and the very rich (Woods,2020). So let's look at the distribution of ghost hotels to see what's causing the problem.
+
+To investigate the spatial distribution characteristics of ghost rooms, this part of research select data from the year 2023 for spatial clustering analysis. The first step involves filtering out the points corresponding to ghost rooms from the dataset. Subsequently, both kernel density analysis and HDBSCAN analysis are performed.
+</p>
+
+### 7.1 KDE Analysis
+<p style="text-align: justify;">
+From the kernel density analysis in the above figure, we can observe that in the central areas of London, particularly in the Camden, Islington, Hackney, and Tower Hamlets regions, the density of ghost room points is significantly higher than in other areas. This indicates a pronounced clustering pattern.
+
+To explore the spatial clustering of ghost spaces in more detail, we opted to conduct cluster analysis using HDBSCAN.
+</p>
+
+![KDE Map of London](KDE.png)
+
+```{python}
+from sklearn.neighbors import KernelDensity
+from sklearn.cluster import DBSCAN
+from libpysal.weights import Queen
+from esda.moran import Moran
+from esda.moran import Moran_Local
+import hdbscan
+```
+
+
+```{python}
+# load the data
+url = 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2023.csv'
+df = pd.read_csv(url)
+
+#filter out ghost room data (room_type=Private room)
+filtered_data = df[df['room_type'] == 'Private room']
+# get 13375 ghost room data of 37242 data
+#Then tranform coordinate into point and make it GeoDataframe
+df_with_coordinates = pd.DataFrame(filtered_data)
+geometry = [Point(lon, lat) for lon, lat in zip(df_with_coordinates['longitude'], df_with_coordinates['latitude'])]
+gdf_with_coordinates = gpd.GeoDataFrame(df_with_coordinates, geometry=geometry, crs="EPSG:4326")
+
+london_map = gpd.read_file(
+    cache_data('https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Borough_Excluding_MHW.zip?raw=true', 
+               os.path.join('data','geo')), driver='ESRI Shapefile')
+london_vector_map = london_map.to_crs('EPSG:4326')
+# spatial connection 
+merged_gdf = gpd.sjoin(gdf_with_coordinates, london_vector_map, how='left', op='within')
+
+print(merged_gdf)
+```
+
+```{python}
+# Next step we do the KDE analysis
+# filter again 
+filter_points = merged_gdf[merged_gdf['host_listings_count']>1]
+filtered_points=filter_points[filter_points['availability_365']>90]
+plt.figure(figsize=(10, 8))
+sns.kdeplot(
+    data=filtered_points,
+    x='longitude',
+    y='latitude',
+    fill=True,
+    cmap='viridis',
+    cbar=True,
+    levels=20,  # Adjust contour levels as needed,
+    alpha=0.9
+)
+
+london_vector_map.plot(ax=plt.gca(), color='none', edgecolor='grey',alpha=0.3)
+# set the map title
+plt.title('Kernel Density Estimate with London Ward Map')
+plt.show()
+```
+
+### 7.2 HDBSCAN Analysis
+<p style="text-align: justify;">
+In the HDBSCAN analysis, setting min_cluster_size to 50 means that regions with fewer than 50 data points will be labeled as noise or individual data points. Ultimately, we obtained 11 clusters, with some clusters distributed not only in the central areas of London mentioned above but also in Brent and Hillingdon.
+</p>
+
+![HDBSCAN of London](HDBSCAN.png)
+
+Number of clusters: 11
+
+```{python}
+# Next step we do the HDBscan
+# create feature dataframe
+features =filtered_points[['longitude', 'latitude']]
+HDBscan = hdbscan.HDBSCAN(min_cluster_size=50, metric='haversine')
+
+# cluster the feature
+clusters = HDBscan.fit_predict(features)
+
+# add cluster results into GeoDataFrame 
+filtered_points['cluster'] = clusters
+# Filtering out clustered points.
+clustered_points =filtered_points[filtered_points['cluster'] != -1]
+
+# draw the map
+plt.figure(figsize=(12,10))
+clustered_points.plot(column= 'cluster', cmap='viridis', legend=True, markersize=8, edgecolor='none', alpha=0.7)
+plt.title('HDBSCAN Clustering on GeoDataFrame')
+london_vector_map.plot(ax=plt.gca(), color='none', edgecolor='grey',alpha=0.4)
+plt.show()
+
+# show the cluster amount
+num_clusters =clustered_points['cluster'].nunique()
+print("Number of clusters:", num_clusters)
+```
+
+### 7.3 Spatial Autocorrelation Studies
+<p style="text-align: justify;">
+Now, this identifies where we congregate based on our criteria but it doesn't show us that we have similar densities of ghost hotels. In other words, we need to explore whether the density of ghost hotels in different London boroughs is similar in its spatial distribution? We therefore perform a spatial autocorrelation analysis of the presence of ghost hotels in London.
+</p>
+
+![Density Distribution Map](Density_Distribution_Map.png)
+
+```{python}
+from sklearn.neighbors import KernelDensity
+from sklearn.cluster import DBSCAN
+from libpysal.weights import Queen
+from esda.moran import Moran, Moran_Local
+import pysal
+from pysal.explore import esda
+```
+
+```{python}
+## Shapefile
+london_map = gpd.read_file(
+    cache_data('https://github.com/ZhengyongLiu/FSDS_GroupAssignment_Data/blob/main/Borough/London_Borough_Excluding_MHW.zip?raw=true', 
+               os.path.join('data','geo')), driver='ESRI Shapefile')
+london_vector_map = london_map.to_crs(epsg=4326)
+## CSV
+url = 'https://raw.githubusercontent.com/ZhengyongLiu/FSDS_GroupAssignment_Data/main/Data/cleaned_data_2023.csv'
+df = pd.read_csv(url)
+
+#filter out ghost room data (room_type=Private room)
+filtered_data = df[df['room_type'] == 'Private room']
+# get 13375 ghost room data of 37242 data
+#Then tranform coordinate into point and make it GeoDataframe
+df_with_coordinates = pd.DataFrame(filtered_data)
+geometry = [Point(lon, lat) for lon, lat in zip(df_with_coordinates['longitude'], df_with_coordinates['latitude'])]
+gdf_with_coordinates = gpd.GeoDataFrame(df_with_coordinates, geometry=geometry, crs="EPSG:4326")
+```
+
+```{python}
+# Setting up the geographic coordinate system and calculating the area
+london_vector_map = london_vector_map.to_crs(epsg=27700)
+london_vector_map['area'] = london_vector_map['geometry'].area / 10**6
+london_vector_map = london_vector_map.to_crs(epsg=4326)
+
+# Consolidation of geographic data
+merged_gdf = gpd.sjoin(gdf_with_coordinates, london_vector_map, how='left', op='within')
+selected_columns = ['NAME', 'latitude', 'longitude', 'geometry', 'area', 'GSS_CODE']
+merged_gdf = merged_gdf[selected_columns].rename(columns={'NAME': 'name'})
+
+# Calculate data counts and densities for each area
+grouped_counts = merged_gdf['name'].value_counts().reset_index()
+grouped_counts.columns = ['name', 'groupcounts']
+merged_gdf = merged_gdf.merge(grouped_counts, on='name', how='left')
+merged_gdf['density'] = merged_gdf['groupcounts'] / merged_gdf['area']
+
+# Select specific columns and group by 'GSS_CODE'
+selected_columns_2 = ['name', 'latitude', 'longitude', 'density', 'GSS_CODE']
+merged_gdf = merged_gdf[selected_columns_2]
+merged_gdf = merged_gdf.groupby('GSS_CODE').agg(
+    density=('density', 'mean'),
+    name=('name', 'first'),
+    latitude=('latitude', 'first'),
+    longitude=('longitude', 'first')
+).reset_index()
+
+# Creation of a geographic data framework
+geometry = [Point(xy) for xy in zip(merged_gdf['longitude'], merged_gdf['latitude'])]
+crs = "EPSG:4326"
+merged_gdf = gpd.GeoDataFrame(merged_gdf, geometry=geometry, crs=crs)
+points_joined_gdf = gpd.sjoin(london_vector_map, merged_gdf, how='left', op='intersects')
+
+# Mapping of density distribution
+fig, ax = plt.subplots(figsize=(10, 10))
+london_vector_map.plot(ax=ax, color='none', edgecolor='grey', alpha=0.4)
+points_joined_gdf.plot(column='density', cmap='YlOrRd', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
+plt.title('Density Distribution Map')
+plt.show()
+```
+
+<p style="text-align: justify;">
+Firstly, by showing the density of ghost hotels in each administrative area on a map. We can see that the density of ghost hotels is higher in the centre of London and decreases as we move outwards. We hypothesise that this is related to London's tourist classics. Ghost hotels are targeted at people with a propensity for short-term rentals, so tourists are perhaps one of their most important customers.
+
+
+</p>
+
+### 7.3 Moran’s I
+The following results are the relevant calculations for Moran's I
+
+* Moran's I: 0.2841109900099211
+* Expected Moran's I: -0.03125
+* Moran's I p-value: 0.009
+
+```{python}
+# Create a spatial weight matrix
+w = weights.Queen.from_dataframe(points_joined_gdf)
+# Standardised weighting matrix
+w.transform = 'R'
+# Extract population density columns
+y = points_joined_gdf['density']
+# Perform Moran Index analyses
+moran = Moran(y, w)
+print("Moran's I:", moran.I)
+print("Expected Moran's I:", moran.EI)
+print("Moran's I p-value:", moran.p_sim)
+```
+
+<p style="text-align: justify;">
+By applying the Global Moran's Index to the density of ghost hotels, we find that there is some spatial similarity in the density of ghost hotels in these boroughs. We therefore check this using Local Moran's I and some other statistics.
+</p>
+
+### Local Moran’s I
+By visualising the map we can see that most of central London has Local Moran's I values between 1-2, which suggests that the density of ghost hotels in this part of the city is similarly related, with the majority of ghost hotels clustering in this vicinity. For the significantly reddened areas, there may be some factor that makes the ghost hotel density not similar to the ghost hotel density towards the neighbouring boroughs.
+
+![Standardized Local Moran's I Clustering](Standardized_Local_Moran's_I_Clustering.png)
+
+By analysis, it is possible to find out. There is a correlation between the distribution of these ghost hotels. This phenomenon is also extremely similar to the findings of the London Municipal Report that several inner-city London boroughs and the City of London's financial district have a very high density of short-term lettings (Mayor of London, 2023).
+
+```{python}
+def visualize_local_moran(gdf, variable_column, base_map, cmap='coolwarm'):
+    # Create a spatial weight matrix
+    w = weights.Queen.from_dataframe(gdf)
+
+    # Standardised weighting matrix
+    w.transform = 'R'
+
+    # Extract variable columns
+    y = gdf[variable_column]
+
+    # Perform localised Moran's index analysis
+    moran_loc = Moran_Local(y, w)
+
+    # Add localised Moran Index clustering result columns to GeoDataFrame
+    gdf['lisa_cluster'] = moran_loc.q
+
+    # Standardised localised Moran index (z-score)
+    lisa_std = (moran_loc.Is - moran_loc.EI_sim.mean()) / moran_loc.EI_sim.std()
+
+    # Create maps
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+
+    # Base Map
+    base_map.plot(ax=ax, color='lightgray', edgecolor='black')
+
+    # Plotting standardised localised Moran Index results
+    gdf.plot(column='lisa_cluster', cmap=cmap, legend=True, ax=ax)
+    
+    # Scatter plotting (centres of polygons)
+    gdf['geometry_center'] = gdf.geometry.centroid
+    plt.scatter(gdf.geometry_center.x, gdf.geometry_center.y, c=lisa_std, cmap=cmap, marker='.', s=20, edgecolors='k', linewidths=0.5)
+
+    # Add titles and tags
+    plt.title('Standardized Local Moran\'s I Clustering')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.show()
+
+# Use the function, passing in your GeoDataFrame, variable column names and basemap data
+visualize_local_moran(points_joined_gdf, 'density', london_vector_map)
+```
+
+### Getis Ord General G
+<p style="text-align: justify;">
+To further validate our test, we used another spatial autocorrelation test statistic.
+</p>
+
+![Local Getis-Ord G Clustering](Local_Getis-Ord_G_Clustering.png)
+
+<p style="text-align: justify;">
+With this pattern of spatial autocorrelation analyses we can see that this is broadly consistent with Local Moran's I results. There is some localised clustering of ghost hotel densities in North Central London, but the significance is likely to be relatively low. Significance is strongest in central London. For the other darker coloured areas, the significance of ghost hotels clustering in these parts is weaker.
+</p>
+
+```{python}
+import geopandas as gpd
+from libpysal import weights
+from esda.getisord import G_Local
+import matplotlib.pyplot as plt
+
+def visualize_local_getisord(gdf, variable_column, base_map, cmap='coolwarm'):
+    # Create a spatial weight matrix
+    w = weights.Queen.from_dataframe(gdf)
+
+    # Standardised weighting matrix
+    w.transform = 'R'
+
+    # Extract variable columns
+    y = gdf[variable_column]
+
+    # Local Getis-Ord G* analyses conducted
+    getisord = G_Local(y, w)
+
+    # Add local Getis-Ord G* clustering result columns to GeoDataFrame
+    gdf['getisord_cluster'] = getisord.z_sim
+
+    # Create maps
+    fig, ax = plt.subplots(figsize=(12, 8))
+    base_map.plot(ax=ax, color='lightgray', edgecolor='black')
+    gdf.plot(column='getisord_cluster', cmap=cmap, legend=True, ax=ax)
+
+    # label
+    plt.title('Local Getis-Ord G Clustering')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.show()
+
+# Use the function, passing in your GeoDataFrame, variable column names and basemap data
+visualize_local_getisord(points_joined_gdf, 'density', london_vector_map, cmap='RdYlBu')
+```
+
+### Summary
+<p style="text-align: justify;">
+Putting it all together, according to the report we know that there are currently around 66,641 short-term lets listed on the London rental market. Westminster is the capital's short-term rental market hotspot, with 11 per cent of all available short-term rental properties in the borough located there. Tower Hamlets is a close second, accounting for 8.3 per cent of London's short-term rental supply, followed by Hackney (7.7 per cent), Camden (6.8 per cent) and Kensington and Chelsea (6.8 per cent). It is clear that these areas also show a significant correlation on the map. This indication that the density of ghost hotels in different boroughs is similar to that of the industry as a whole leads to people being overly trusting in the reasonableness of their location when booking short lets to their detriment.
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p style="text-align: justify;">
+结论  政策
+
+
+面向租户
+
+1.在进行租赁之前,应向房主问明房间情况,房屋权属,合理维护自己权益
+2.充分利用评论以及爱彼迎平台的搜索工具,尽量规避幽灵酒店
+3.积极反馈,协助平台减少幽灵酒店数量
+
+面向爱彼迎 平台
+
+1. 加强对拥有多套私人住房的房主的资格审查,判定其名下的房产是否存在幽灵房间的情况
+
+2. 对拥有过幽灵房间的房主进行标记,并降低其名下房间的推荐度
+
+3. 不同类型的租赁需要相互区分,鼓励平台对不同的租赁方式进行分类,减少幽灵酒店的出现
+
+面相政府
+
+1. 应依据空间聚类结果,对幽灵房间成集聚趋势的区域(如Camden /Islington/Hackney等)加强定期审查的频率与强度
+2. 在政策方面,政府应当制定政策,完善对幽灵酒店的监管,因为Airbnb上的幽灵酒店似乎像酒店一样运作，提供具有竞争力的价格，同时规避区域规定、安全规定和旅游税。
+3. 需要对私人房间租赁重新评估, 除了提供有关如何最好地规范短期租赁的见解之外，还强调了对这些规定的妥善执行
+</p>
+
+
+# References
 Inside Airbnb (2016) 'Inside Airbnb: Home', Available at: [Inside Airbnb](http://insideairbnb.com/) (Accessed: 04 December 2023).
 
 Slee, T. (2017). *Airbnb Data Collection: Methodology and Accuracy*. Retrieved from [http://tomslee.net/airbnb-data-collection](http://tomslee.net/airbnb-data-collection)
 
 Stoyanovich, J., Howe, B. & Jagadish, H.V., 2020. Responsible data management. *Proceedings of the VLDB Endowment*, 13(12).
+
+Boyle, M. (2022) 'London Airbnb statistics: How has Airbnb grown in the UK’s capital?, Finder.com. Available at: https://www.finder.com/uk/airbnb-statistics (Accessed: 09 December 2023).
+
+Woods, D. (2020) 'Airbnb is being overrun by ghost hotels', Paper Giant. Available at: https://www.papergiant.net/news/airbnb-is-being-overrun-by-ghost-hotels (Accessed: 11 December 2023).
+
+Mayor of London. (2023). Have your say on short-term lettings. Available at: https://www.london.gov.uk/talk-london/topics/housing/short-term-lettings-london/surveys/926 [Accessed: 18 Dec 2023].
+
